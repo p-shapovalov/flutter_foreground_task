@@ -200,10 +200,9 @@ class ForegroundService : Service() {
         stopForegroundService()
         unregisterBroadcastReceiver()
 
-        var isCorrectlyStopped = false
-        if (::foregroundServiceStatus.isInitialized) {
-            isCorrectlyStopped = foregroundServiceStatus.isCorrectlyStopped()
-        }
+        // Re-read from prefs since stopService() skips onStartCommand.
+        foregroundServiceStatus = ForegroundServiceStatus.getData(applicationContext)
+        val isCorrectlyStopped = foregroundServiceStatus.isCorrectlyStopped()
         val allowAutoRestart = foregroundTaskOptions.allowAutoRestart
         if (allowAutoRestart && !isCorrectlyStopped && !ForegroundServiceUtils.isSetStopWithTaskFlag(this)) {
             Log.e(TAG, "The service will be restarted after 5 seconds because it wasn't properly stopped.")

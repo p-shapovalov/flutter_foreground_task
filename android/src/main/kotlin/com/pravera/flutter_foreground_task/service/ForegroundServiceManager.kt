@@ -76,7 +76,7 @@ class ForegroundServiceManager {
 		ForegroundTaskOptions.clearData(context)
 		ForegroundTaskData.clearData(context)
 		NotificationContent.clearData(context)
-		ContextCompat.startForegroundService(context, nIntent)
+		context.stopService(nIntent)
 	}
 
 	/** Send data to TaskHandler. */
