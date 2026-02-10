@@ -60,7 +60,7 @@ class ForegroundServiceManager {
 		ForegroundTaskOptions.updateData(context, argsMap)
 		ForegroundTaskData.updateData(context, argsMap)
 		NotificationContent.updateData(context, argsMap)
-		ContextCompat.startForegroundService(context, nIntent)
+		context.startService(nIntent)
 	}
 
 	/** Stop the foreground service. */

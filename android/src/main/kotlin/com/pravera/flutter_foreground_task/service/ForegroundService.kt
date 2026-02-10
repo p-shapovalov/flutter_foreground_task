@@ -200,6 +200,10 @@ class ForegroundService : Service() {
         stopForegroundService()
         unregisterBroadcastReceiver()
 
+        // Guard: foregroundTaskOptions may not be initialized if onDestroy runs
+        // before onStartCommand (e.g. system kills service before it fully starts).
+        if (!::foregroundTaskOptions.isInitialized) return
+
         // Re-read from prefs since stopService() skips onStartCommand.
         foregroundServiceStatus = ForegroundServiceStatus.getData(applicationContext)
         val isCorrectlyStopped = foregroundServiceStatus.isCorrectlyStopped()
